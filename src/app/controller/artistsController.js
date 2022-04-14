@@ -35,10 +35,41 @@ class ArtistController {
     }
     //[GET]
     getLoadMoreArtistTop(req, res, next) {
-        const length = 1;
-        res.status(200).json({
-            message: "hello"
-        })
+        if (req.query.nation === 'All Artists') {
+            artistsDB.find()
+                .then((artists) => {
+                    if (artists.length === req.query.allArtists.length) {
+                        res.status(200).json({
+                            message: "The singer has run out",
+                            outOfArtist: true
+                        })
+                    } else {
+                        res.status(200).json({
+                            artists: artists.slice(artists.length - 1, artists.length + 5),
+                            outOfArtist: false
+                        })
+                    }
+                })
+                .catch(next)
+        } else {
+            artistsDB.find({
+                    nation: req.query.nation
+                })
+                .then((artists) => {
+                    if (artists.length === req.query.allArtists.length) {
+                        res.status(200).json({
+                            message: "The singer has run out",
+                            outOfArtist: true
+                        })
+                    } else {
+                        res.status(200).json({
+                            artists: artists.slice(artists.length - 1, artists.length + 5),
+                            outOfArtist: false
+                        })
+                    }
+                })
+                .catch(next)
+        }
     }
     //[GET] /country
     getArtistsByCountry(req, res, next) {
@@ -51,6 +82,48 @@ class ArtistController {
                 })
             })
             .catch(next)
+    }
+    //[GET] /genre
+    getArtistsByGenre(req, res, next) {
+        artistsDB.find({
+                type: req.query.genre
+            })
+            .then((artists) => {
+                console.log(artists)
+                res.status(200).json({
+                    artists
+                })
+            })
+            .catch(next)
+    }
+    //[GET]
+    search(req, res, next) {
+        if (req.query.nation === 'All Artists') {
+            artistsDB.find({
+                    stageName: {
+                        $regex: '.*' + req.query.textField + '.*'
+                    }
+                })
+                .then((artists) => {
+                    res.status(200).json({
+                        artists
+                    })
+                })
+                .catch(next)
+        } else {
+            artistsDB.find({
+                    stageName: {
+                        $regex: '.*' + req.query.textField + '.*'
+                    },
+                    nation: req.query.nation
+                })
+                .then((artists) => {
+                    res.status(200).json({
+                        artists
+                    })
+                })
+                .catch(next)
+        }
     }
     //[PUT]
     likeArtists(req, res, next) {
@@ -95,35 +168,6 @@ class ArtistController {
                 })
             })
         next()
-    }
-    //[GET]
-    search(req, res, next) {
-        if (req.query.nation === 'All Artists') {
-            artistsDB.find({
-                    stageName: {
-                        $regex: '.*' + req.query.textField + '.*'
-                    }
-                })
-                .then((artists) => {
-                    res.status(200).json({
-                        artists
-                    })
-                })
-                .catch(next)
-        } else {
-            artistsDB.find({
-                    stageName: {
-                        $regex: '.*' + req.query.textField + '.*'
-                    },
-                    nation: req.query.nation
-                })
-                .then((artists) => {
-                    res.status(200).json({
-                        artists
-                    })
-                })
-                .catch(next)
-        }
     }
 }
 
