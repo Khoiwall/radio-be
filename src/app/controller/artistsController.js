@@ -48,7 +48,7 @@ class ArtistController {
                         })
                     } else {
                         res.status(200).json({
-                            artists: tmpArtists.slice(tmpArtists.length - 1, tmpArtists.length + 5),
+                            artists: tmpArtists.slice(tmpArtists.length, tmpArtists.length + 6),
                             outOfArtist: false
                         })
                     }
@@ -67,7 +67,7 @@ class ArtistController {
                         })
                     } else {
                         res.status(200).json({
-                            artists: artists.slice(artists.length - 1, artists.length + 5),
+                            artists: artists.slice(req.query.allArtists.length, req.query.allArtists.length + 6),
                             outOfArtist: false
                         })
                     }
@@ -89,7 +89,7 @@ class ArtistController {
                     })
                 } else {
                     res.status(200).json({
-                        artists: tmpArtists.slice(tmpArtists.length - 1, tmpArtists.length + 5),
+                        artists: tmpArtists.slice(req.query.allArtists.length, req.query.allArtists.length + 6),
                         outOfArtist: false
                     })
                 }
