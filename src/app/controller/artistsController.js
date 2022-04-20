@@ -38,7 +38,7 @@ class ArtistController {
         if (req.query.nation === 'All Artists') {
             artistsDB.find()
                 .then((artists) => {
-                    const tmpArtists = artists.filter((artist)=>{
+                    const tmpArtists = artists.filter((artist) => {
                         return artist.type.indexOf(req.query.genre) !== -1
                     })
                     if (tmpArtists.length === req.query.allArtists.length) {
@@ -54,8 +54,8 @@ class ArtistController {
                     }
                 })
                 .catch(next)
-        } 
-        if (req.query.genre === "All Genres"){
+        }
+        if (req.query.genre === "All Genres") {
             artistsDB.find({
                     nation: req.query.nation
                 })
@@ -74,117 +74,131 @@ class ArtistController {
                 })
                 .catch(next)
         }
-        if (req.query.genre !== "All Genres" && req.query.nation !== "All Artists"){
+        if (req.query.genre !== "All Genres" && req.query.nation !== "All Artists") {
             artistsDB.find({
-                nation: req.query.nation
-            })
-            .then((artists) => {
-                const tmpArtists = artists.filter((artist)=>{
-                    return artist.type.indexOf(req.query.genre) !== -1
+                    nation: req.query.nation
                 })
-                if (tmpArtists.length === req.query.allArtists.length) {
-                    res.status(200).json({
-                        message: "The singer has run out",
-                        outOfArtist: true
+                .then((artists) => {
+                    const tmpArtists = artists.filter((artist) => {
+                        return artist.type.indexOf(req.query.genre) !== -1
                     })
-                } else {
-                    res.status(200).json({
-                        artists: tmpArtists.slice(req.query.allArtists.length, req.query.allArtists.length + 6),
-                        outOfArtist: false
-                    })
-                }
-            })
-            .catch(next)
+                    if (tmpArtists.length === req.query.allArtists.length) {
+                        res.status(200).json({
+                            message: "The singer has run out",
+                            outOfArtist: true
+                        })
+                    } else {
+                        res.status(200).json({
+                            artists: tmpArtists.slice(req.query.allArtists.length, req.query.allArtists.length + 6),
+                            outOfArtist: false
+                        })
+                    }
+                })
+                .catch(next)
         }
     }
     //[GET] country and genre
     getArtistsByCountryAndGenre(req, res, next) {
-        if (req.query.nation === 'All Artists'){
+        if (req.query.nation === 'All Artists') {
             artistsDB.find()
-            .then((artists) => {
-                const tmpArtists = artists.filter((artist)=>{
-                    return artist.type.indexOf(req.query.genre) !== -1
+                .then((artists) => {
+                    const tmpArtists = artists.filter((artist) => {
+                        return artist.type.indexOf(req.query.genre) !== -1
+                    })
+                    res.status(200).json({
+                        artists: tmpArtists.slice(0, 6)
+                    })
                 })
-                res.status(200).json({
-                    artists: tmpArtists
-                })
-            })
-            .catch(next)
+                .catch(next)
         }
         if (req.query.genre === 'All Genres') {
             artistsDB.find({
-                nation: req.query.nation
-            })
-            .then((artists) => {
-                res.status(200).json({
-                    artists
+                    nation: req.query.nation
                 })
-            })
-            .catch(next)
+                .then((artists) => {
+                    res.status(200).json({
+                        artists: artists.slice(0, 6)
+                    })
+                })
+                .catch(next)
         }
-        if (req.query.genre !== "All Genres" && req.query.nation !== "All Artists"){
+        if (req.query.genre !== "All Genres" && req.query.nation !== "All Artists") {
             artistsDB.find({
-                nation: req.query.nation
-            })
-            .then((artists) => {
-                const tmpArtists = artists.filter((artist)=>{
-                    return artist.type.indexOf(req.query.genre) !== -1
+                    nation: req.query.nation
                 })
-                res.status(200).json({
-                    artists: tmpArtists
+                .then((artists) => {
+                    const tmpArtists = artists.filter((artist) => {
+                        return artist.type.indexOf(req.query.genre) !== -1
+                    })
+                    res.status(200).json({
+                        artists: tmpArtists.slice(0, 6)
+                    })
                 })
-            })
-            .catch(next)
+                .catch(next)
         }
     }
     //[GET]
     search(req, res, next) {
-        if (req.query.nation === 'All Artists') {
+        if (req.query.genre === "All Genres" && req.query.nation === "All Artists") {
             artistsDB.find({
                     stageName: {
-                        $regex: '.*' + req.query.textField + '.*'
+                        $regex: '.*' + req.query.textField + '.*',
+                        $options: "i"
                     }
                 })
                 .then((artists) => {
-                    const tmpArtists = artists.filter((artist)=>{
-                        return artist.type.indexOf(req.query.genre) !== -1
-                    })
                     res.status(200).json({
-                        artists: tmpArtists
+                        artists: artists.slice(0, 6)
                     })
                 })
                 .catch(next)
-        } 
-        if (req.query.genre === "All Genres"){
+        } else if (req.query.nation === 'All Artists' && req.query.genre !== "All Genres") {
             artistsDB.find({
-                stageName: {
-                    $regex: '.*' + req.query.textField + '.*'
-                },
-                nation: req.query.nation
-            })
-            .then((artists) => {
-                res.status(200).json({
-                    artists
+                    stageName: {
+                        $regex: '.*' + req.query.textField + '.*',
+                        $options: "i"
+                    }
                 })
-            })
-            .catch(next)
-        }
-        if (req.query.genre !== "All Genres" && req.query.nation !== "All Artists"){
+                .then((artists) => {
+                    const tmpArtists = artists.filter((artist) => {
+                        return artist.type.indexOf(req.query.genre) !== -1
+                    })
+                    res.status(200).json({
+                        artists: tmpArtists.slice(0, 6)
+                    })
+                })
+                .catch(next)
+        } else if (req.query.nation !== 'All Artists' && req.query.genre === "All Genres") {
             artistsDB.find({
-                stageName: {
-                    $regex: '.*' + req.query.textField + '.*'
-                },
-                nation: req.query.nation
-            })
-            .then((artists) => {
-                const tmpArtists = artists.filter((artist)=>{
-                    return artist.type.indexOf(req.query.genre) !== -1
+                    stageName: {
+                        $regex: '.*' + req.query.textField + '.*',
+                        $options: "i"
+                    },
+                    nation: req.query.nation
                 })
-                res.status(200).json({
-                    artists: tmpArtists
+                .then((artists) => {
+                    res.status(200).json({
+                        artists: artists.slice(0, 6)
+                    })
                 })
-            })
-            .catch(next)
+                .catch(next)
+        } else {
+            artistsDB.find({
+                    stageName: {
+                        $regex: '.*' + req.query.textField + '.*',
+                        $options: "i"
+                    },
+                    nation: req.query.nation
+                })
+                .then((artists) => {
+                    const tmpArtists = artists.filter((artist) => {
+                        return artist.type.indexOf(req.query.genre) !== -1
+                    })
+                    res.status(200).json({
+                        artists: tmpArtists.slice(0, 6)
+                    })
+                })
+                .catch(next)
         }
     }
     //[PUT]

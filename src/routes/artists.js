@@ -9,7 +9,7 @@ router.put('/like-artist', ArtistController.authenticateToken, ArtistController.
 router.get('/search-by-country-and-genre',ArtistController.getArtistsByCountryAndGenre);
 router.get('/get-artist-top/load-more', ArtistController.getLoadMoreArtistTop);
 router.get('/get-artist-top', ArtistController.getTopArtists);
-router.get('/search', ArtistController.search);
+router.get('/search', ArtistController.search,ArtistController.getAllArtists);
 router.get('/',ArtistController.getAllArtists);
 
 module.exports = router; 
