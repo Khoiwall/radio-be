@@ -6,6 +6,7 @@ const Album = new Schema({
     idTrack: Array,
     artists: Array,
     like: Number,
+    type: Array,
     name: { type: String, maxlength: 255},
     image: String
 },
