@@ -1,12 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const http = require('http');
 const port = process.env.PORT || 5000
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const server = http.createServer(app);
+const server = app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+
 const io = require('socket.io')(server);
 
 app.use(cors());
@@ -55,7 +57,3 @@ app.get('/', (req, res) => {
 })
 
 routes(app);
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
