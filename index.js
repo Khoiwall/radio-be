@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const io = require('socket.io')(3001, {
   cors: {
-    origin: ['http://localhost:3000']
+    origin: ['https://radio-fe.vercel.app']
   }
 });
 
