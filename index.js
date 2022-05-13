@@ -1,15 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const http = require('http');
 const port = process.env.PORT || 5000
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const io = require('socket.io')(3001, {
-  cors: {
-    origin: ['https://radio-fe.vercel.app']
-  }
-});
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 
 app.use(cors());
 
