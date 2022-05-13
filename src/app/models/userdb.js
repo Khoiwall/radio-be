@@ -2,9 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Users = new Schema({
-    idUser: { type: String, maxlength: 255 },
+    idUser: {
+        type: String,
+        maxlength: 255
+    },
     fullName: String,
-    userName:String,
+    userName: String,
     email: String,
     password: String,
     avatar: String,
@@ -13,8 +16,8 @@ const Users = new Schema({
     likeTracks: Array,
     likeArtists: Array,
     likeAlbum: Array,
-},
-{
+    likeComnents: Array,
+}, {
     timestamps: true,
 });
 

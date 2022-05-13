@@ -45,6 +45,10 @@ io.on("connection", socket => {
     }
     io.emit("resend-dislike-or-like-artist", allArtists);
   })
+  socket.on("comment", (comment, album) => {
+    album.comments.push(comment)
+    io.emit("send-comments", album);
+  })
 })
 
 // app

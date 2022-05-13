@@ -29,6 +29,16 @@ class AlbumController {
             })
             .catch(next)
     }
+    // [GET] album by id
+    getAlbumById(req, res, next) {
+        albumDB.find({
+                idAlbum: req.params.idAlbum
+            })
+            .then((album) => {
+                res.status(200).json(album);
+            })
+            .catch(next)
+    }
     // [GET]
     async loadMoreAlbums(req, res, next) {
         if (req.query.genre === 'All Genres') {
@@ -151,12 +161,11 @@ class AlbumController {
                 })
                 .then((albums) => {
                     res.status(200).json({
-                        albums: albums.slice(0,6)
+                        albums: albums.slice(0, 6)
                     })
                 })
                 .catch(next)
-        }
-        else if (req.query.genre === 'All Genres' && req.query.nation !== 'All Country') {
+        } else if (req.query.genre === 'All Genres' && req.query.nation !== 'All Country') {
             const artists = await artistsDB.find({
                 nation: req.query.nation
             });
@@ -173,8 +182,7 @@ class AlbumController {
                     })
                 })
                 .catch(next)
-        }
-        else if (req.query.nation === 'All Country' && req.query.genre !== 'All Genres') {
+        } else if (req.query.nation === 'All Country' && req.query.genre !== 'All Genres') {
             albumDB.find({
                     name: {
                         $regex: '.*' + req.query.textField + '.*',
@@ -190,8 +198,7 @@ class AlbumController {
                     })
                 })
                 .catch(next)
-        }
-        else{
+        } else {
             const artists = await artistsDB.find({
                 nation: req.query.nation
             });
@@ -212,6 +219,28 @@ class AlbumController {
                 })
                 .catch(next)
         }
+    }
+    //[PUT] add comments
+    async addComment(req, res, next) {
+        req.body._album.comments.push(req.body.comment);
+        console.log(req.body._album);
+        albumDB.updateOne({
+                idAlbum: req.body._album.idAlbum
+            }, {
+                $set: {
+                    comments: req.body._album.comments
+                }
+            })
+            .then(() => {
+                res.status(200).json({
+                    message: 'commented'
+                })
+            })
+            .catch(() => {
+                res.status(200).json({
+                    message: 'fail'
+                })
+            })
     }
 }
 
