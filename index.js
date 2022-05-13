@@ -9,7 +9,11 @@ const server = app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'https://radio-fe.vercel.app'
+  }
+});
 
 app.use(cors());
 
