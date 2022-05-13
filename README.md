@@ -28,17 +28,17 @@ Perix Radio là một web nghe nhạc do Trần Đình Khôi tạo, web còn đa
 - Hệ quản trị cơ sở dữ liệu: MongoDB
     
 ### Chức năng đã có
--Nghe nhạc
--Thích ca sĩ (realTime)
--Comment (realTime)
--Đăng nhập, đăng ký
+- Nghe nhạc
+- Thích ca sĩ (realTime)
+- Comment (realTime)
+- Đăng nhập, đăng ký
   
 ### Chức năng cần tiến trong tương lai
--Tìm kiếm bài hát
--Thêm bài hát
--Có mã code google khi đăng ký, đăng nhập
--Quên mật khẩu
--v.v
+- Tìm kiếm bài hát
+- Thêm bài hát
+- Có mã code google khi đăng ký, đăng nhập
+- Quên mật khẩu
+- v.v
 
 ## Web Music  (English)
 ### Cài đặt 
@@ -70,15 +70,14 @@ Perix Radio is a music website created by Tran Dinh Khoi, the web is still under
 - Database: MongoDB
 
 ### Current Hepler: 
--Listen to music
--Like the singer (realTime)
--Comment (realTime)
--Log in sign up
+- Listen to music
+- Like the singer (realTime)
+- Comment (realTime)
+- Log in sign up
     
 ### Future Hepler: 
--Search for songs
--More songs
--There is a google code when registering, logging in
--Forgot password
--v.v
-
+- Search for songs
+- More songs
+- There is a google code when registering, logging in
+- Forgot password
+- v.v
