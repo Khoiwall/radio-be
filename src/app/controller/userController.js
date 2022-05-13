@@ -180,6 +180,38 @@ class userController {
                 console.log('update fail!!')
             })
     }
+    // add track to user
+    addTracktoUser(req, res, next) {
+        UserDB.updateOne({
+                idUser: req.user.idUser
+            }, {
+                $push: {
+                    likeTracks: req.body.idTrack
+                }
+            })
+            .then(() => {
+                console.log('updated !!')
+            })
+            .catch(() => {
+                console.log('update fail!!')
+            })
+    }
+    //put out Artist to user
+    putOutTrackToUser(req, res, next) {
+        UserDB.updateOne({
+                idUser: req.user.idUser
+            }, {
+                $pull: {
+                    likeTracks: req.body.idTrack
+                }
+            })
+            .then(() => {
+                console.log('updated !!')
+            })
+            .catch(() => {
+                console.log('update fail!!')
+            })
+    }
     //[GET]
     getMusicByUserId(req, res, next) {}
 }
